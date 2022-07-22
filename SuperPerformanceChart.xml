@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SuperPerformanceChart</name>
+    </assembly>
+    <members>
+        <member name="T:SuperPerformanceChart.Series.ScaleModeEnum">
+            <summary>
+            Scale mode for value aspect ratio
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.Series.ScaleModeEnum.Percent">
+            <summary>
+            Percent Scale Mode: Values from 0 to 100 are accepted and displayed
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.Series.ScaleModeEnum.RelativeVisble">
+            <summary>
+            Relative Scale Mode: Value is shown scaled within the bounds of the currrently visible values
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.Series.ScaleModeEnum.RelativeAll">
+            <summary>
+            Relative Scale Mode: Value is shown scaled within the bounds of all value in the seeries
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.Series.ScaleModeEnum.Absolute">
+            <summary>
+            Absolute Scale Mode: Values from 0 to the Series Maximum
+            </summary>
+        </member>
+        <member name="P:SuperPerformanceChart.Series.CacheSize">
+            <summary>
+            Determine the amount data that a Series will store for Statistical purposes
+            </summary>
+        </member>
+        <member name="M:SuperPerformanceChart.Series.GetVerticalLimit(System.Int32)">
+            <summary>
+            Returns the current max displayed value, based on the series Scale Mode
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.DrawChart(System.Drawing.Graphics)">
+            <summary>
+            Draws the chart (w/o background or grid, but with border) to the Graphics canvas
+            </summary>
+            <param name="g">Graphics</param>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.DrawPercentageBar(System.Drawing.Graphics)">
+            <summary>
+            Draws the Percentage on th canvas
+            </summary>
+            <param name="g"></param>
+            <remarks></remarks>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.DrawBackgroundAndGrid(System.Drawing.Graphics)">
+            <summary>
+            Draws the background gradient and the grid into Graphics <paramref name="g"/>
+            </summary>
+            <param name="g">Graphic</param>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.OnPaint(System.Windows.Forms.PaintEventArgs)">
+            <summary>
+            Override OnPaint method
+            </summary>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.Clear">
+            <summary>
+            Clears the whole chart
+            </summary>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.AddValue(System.String,System.Single)">
+            <summary>
+            Adds a value to the Chart Line
+            </summary>
+            <param name="value">progress value</param>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.ChartAppend(SuperPerformanceChart.Series,System.Single)">
+            <summary>
+            Appends value <paramref name="value"/> to the chart (without redrawing)
+            </summary>
+            <param name="value">performance value</param>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.ChartAppendFromQueue">
+            <summary>
+            Appends Values from queue
+            </summary>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.CalcVerticalPosition(SuperPerformanceChart.Series.ScaleModeEnum,System.Single)">
+            <summary>
+            Calculates the vertical Position of a value in relation the chart size,
+            Scale Mode and, if ScaleMode is Relative, to the current maximum value
+            </summary>
+            <param name="value">performance value</param>
+            <returns>vertical Point position in Pixels</returns>
+        </member>
+        <member name="M:SuperPerformanceChart.SuperPerfChart.GetMaxValueForAllSeries">
+            <summary>
+            Returns the current max value, across all visible series
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:SuperPerformanceChart.TimerMode">
+            <summary>
+            Chart Refresh Mode Timer Control Mode
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.TimerMode.Disabled">
+            <summary>
+            Chart is refreshed when a value is added
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.TimerMode.Simple">
+            <summary>
+            Chart is refreshed every <c>TimerInterval</c> milliseconds, adding all values
+            in the queue to the chart. If there are no values in the queue, a 0 (zero) is added
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.TimerMode.SynchronizedAverage">
+            <summary>
+            Chart is refreshed every <c>TimerInterval</c> milliseconds, adding an average of
+            all values in the queue to the chart. If there are no values in the queue,
+            0 (zero) is added
+            </summary>
+        </member>
+        <member name="F:SuperPerformanceChart.TimerMode.SynchronizedSum">
+            <summary>
+            Chart is refreshed every <c>TimerInterval</c> milliseconds, adding the sum of
+            all values in the queue to the chart. If there are no values in the queue,
+            0 (zero) is added
+            </summary>
+        </member>
+    </members>
+</doc>
