@@ -12,7 +12,6 @@
     <SccProvider></SccProvider>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
     <LangVersion>latest</LangVersion>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Platforms>AnyCPU</Platforms>
@@ -23,8 +22,11 @@
     <Company>Fungusware</Company>
     <Copyright>Copyright © Fungusware 2022</Copyright>
     <Authors>Fungusware</Authors>
-    <Version>3.1.8</Version>
+    <Version>3.2.0</Version>
     <Configurations>Build;Debug</Configurations>
+    <IsPublishable>True</IsPublishable>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <GenerateDocumentationFile>False</GenerateDocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Build|AnyCPU'">
     <DefineDebug>true</DefineDebug>
@@ -32,6 +34,7 @@
     <DocumentationFile>
     </DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <Optimize>True</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DefineDebug>true</DefineDebug>
@@ -43,6 +46,10 @@
   <PropertyGroup Label="VSBuilder">
     <Independent>False</Independent>
     <TimeStampedVersion>False</TimeStampedVersion>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>Super Performance Chart</Title>
+    <RepositoryUrl>https://github.com/Fungusware/SuperPerformanceChart.git</RepositoryUrl>
+    <PackageLicenseFile>COPYING</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -62,6 +69,12 @@
     <Compile Remove="SeriesStyle.cs" />
     <EmbeddedResource Remove="TestApp\Form1.resx" />
     <EmbeddedResource Remove="TestApp\My Project\Resources.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\COPYING">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.336902">
