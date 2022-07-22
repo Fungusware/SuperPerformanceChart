@@ -18,11 +18,11 @@
     <CopyLocalLockFileAssemblies>False</CopyLocalLockFileAssemblies>
     <TargetFramework>net6.0-windows</TargetFramework>
     <Product>SuperPerformanceChart</Product>
-    <Description />
+    <Description>A performance style chart originally found at https://www.codeproject.com/Articles/17564/Simple-Performance-Chart</Description>
     <Company>Fungusware</Company>
-    <Copyright>Copyright © Fungusware 2022</Copyright>
+    <Copyright>Copyright © Fungusware 2022, ecplipse2k1 2013</Copyright>
     <Authors>Fungusware</Authors>
-    <Version>3.2.0</Version>
+    <Version>3.2.1</Version>
     <Configurations>Build;Debug</Configurations>
     <IsPublishable>True</IsPublishable>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
