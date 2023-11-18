@@ -16,7 +16,7 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Platforms>AnyCPU</Platforms>
     <CopyLocalLockFileAssemblies>False</CopyLocalLockFileAssemblies>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
     <Product>SuperPerformanceChart</Product>
     <Description>A performance style chart originally found at https://www.codeproject.com/Articles/17564/Simple-Performance-Chart</Description>
     <Company>Fungusware</Company>
@@ -69,8 +69,5 @@
     <Compile Remove="SeriesStyle.cs" />
     <EmbeddedResource Remove="TestApp\Form1.resx" />
     <EmbeddedResource Remove="TestApp\My Project\Resources.resx" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
 </Project>
