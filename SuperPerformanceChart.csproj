@@ -49,7 +49,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Super Performance Chart</Title>
     <RepositoryUrl>https://github.com/Fungusware/SuperPerformanceChart.git</RepositoryUrl>
-    <PackageLicenseFile>COPYING</PackageLicenseFile>
+    <PackageLicenseFile></PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -71,15 +71,6 @@
     <EmbeddedResource Remove="TestApp\My Project\Resources.resx" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\COPYING">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.DotNet.UpgradeAssistant.Extensions.Default.Analyzers" Version="0.4.336902">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="Microsoft.Windows.Compatibility" Version="6.0.0" />
   </ItemGroup>
 </Project>
