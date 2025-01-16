@@ -16,13 +16,13 @@
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Platforms>AnyCPU</Platforms>
     <CopyLocalLockFileAssemblies>False</CopyLocalLockFileAssemblies>
-    <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+    <TargetFrameworks>net472;net6.0-windows;net8.0-windows</TargetFrameworks>
     <Product>SuperPerformanceChart</Product>
     <Description>A performance style chart originally found at https://www.codeproject.com/Articles/17564/Simple-Performance-Chart</Description>
     <Company>Fungusware</Company>
     <Copyright>Copyright © Fungusware 2022, ecplipse2k1 2013</Copyright>
     <Authors>Fungusware</Authors>
-    <Version>3.2.1</Version>
+    <Version>2025.01.16</Version>
     <Configurations>Build;Debug</Configurations>
     <IsPublishable>True</IsPublishable>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
@@ -49,7 +49,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Super Performance Chart</Title>
     <RepositoryUrl>https://github.com/Fungusware/SuperPerformanceChart.git</RepositoryUrl>
-    <PackageLicenseFile></PackageLicenseFile>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
