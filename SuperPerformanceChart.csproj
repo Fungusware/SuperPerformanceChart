@@ -6,21 +6,17 @@
     <OptionStrict>On</OptionStrict>
     <OptionInfer>On</OptionInfer>
     <ResGenToolArchitecture>Managed32Bit</ResGenToolArchitecture>
-    <SccProjectName></SccProjectName>
-    <SccLocalPath></SccLocalPath>
-    <SccAuxPath></SccAuxPath>
-    <SccProvider></SccProvider>
     <DefaultItemExcludes>$(DefaultItemExcludes);$(ProjectDir)**\*.vb</DefaultItemExcludes>
     <LangVersion>latest</LangVersion>
     <UseWindowsForms>true</UseWindowsForms>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <Platforms>AnyCPU</Platforms>
     <CopyLocalLockFileAssemblies>False</CopyLocalLockFileAssemblies>
-    <TargetFrameworks>net472;net6.0-windows;net8.0-windows</TargetFrameworks>
+    <TargetFrameworks>net48;net6.0-windows;net8.0-windows</TargetFrameworks>
     <Product>SuperPerformanceChart</Product>
     <Description>A performance style chart originally found at https://www.codeproject.com/Articles/17564/Simple-Performance-Chart</Description>
     <Company>Fungusware</Company>
-    <Copyright>Copyright © Fungusware 2022, ecplipse2k1 2013</Copyright>
+    <Copyright>Copyright © Fungusware 2025, ecplipse2k1 2013</Copyright>
     <Authors>Fungusware</Authors>
     <Version>2025.01.16</Version>
     <Configurations>Build;Debug</Configurations>
@@ -46,12 +42,17 @@
   <PropertyGroup Label="VSBuilder">
     <Independent>False</Independent>
     <TimeStampedVersion>False</TimeStampedVersion>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Super Performance Chart</Title>
     <RepositoryUrl>https://github.com/Fungusware/SuperPerformanceChart.git</RepositoryUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="TestApp\**" />
+    <EmbeddedResource Remove="TestApp\**" />
+    <None Remove="TestApp\**" />
+  </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
     <Import Include="System" />
@@ -68,7 +69,5 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="SeriesStyle.cs" />
-    <EmbeddedResource Remove="TestApp\Form1.resx" />
-    <EmbeddedResource Remove="TestApp\My Project\Resources.resx" />
   </ItemGroup>
 </Project>
