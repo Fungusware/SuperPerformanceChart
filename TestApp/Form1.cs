@@ -8,10 +8,9 @@ namespace TestApp
     {
         private double _testValue;
         private double _test2Value;
-        private int _adder2;
 
-        private const double TwoPi = 2d * Math.PI;
-        private const double CircleIncrement = Math.PI / 100d;
+        private const double TWOPI = 2d * Math.PI;
+        private const double CIRCLEINCREMENT = Math.PI / 100d;
 
         public frmMain()
         {
@@ -29,8 +28,18 @@ namespace TestApp
 
             chrt.AddSeries("Test", "Test", Color.LightSeaGreen);
             {
+                chrt.Series["Test"].Fill.Visible = true;
                 chrt.Series["Test"].CacheSize = 200;
+                chrt.Series["Test"].ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => $"{v:0.00}";
                 chrt.Series["Test"].ZOrder = 0;
+            }
+
+            chrt.AddSeries("Test2", "Test2", Color.DarkSeaGreen);
+            {
+                chrt.Series["Test2"].Fill.Visible = true;
+                chrt.Series["Test2"].CacheSize = 200;
+                chrt.Series["Test2"].ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => $"{v:0.00}";
+                chrt.Series["Test2"].ZOrder = 0;
             }
 
             chrt.AddSeries("CPU", "CPU", Color.SteelBlue);
@@ -65,30 +74,24 @@ namespace TestApp
         private void tmrMain_Tick(object sender, EventArgs e)
         {
             spcClientDriven.AddValue("Test", (float)Math.Sin(_testValue));
+            _testValue += CIRCLEINCREMENT;
+             if (_testValue >= TWOPI)
+            {
+                _testValue = 0;
+            }
 
-            double increment = CircleIncrement;
-            if (_testValue >= TwoPi)
+            spcClientDriven.AddValue("Test2", (float)Math.Cos(_test2Value));
+            _test2Value += CIRCLEINCREMENT;
+            if (_test2Value >= TWOPI)
             {
-                increment = -increment;
+                _test2Value = 0;
             }
-            _testValue += increment;
-
-            spcClientDriven.AddValue("Test2", (float)_test2Value);
-            if (_test2Value >= 30d)
-            {
-                _adder2 = -1;
-            }
-            else if (_test2Value <= 0d)
-            {
-                _adder2 = 1;
-            }
-            _test2Value += _adder2;
 
             spcClientDriven.AddValue("CPU", (float)((decimal)pcCPU.NextValue() / Environment.ProcessorCount));
             spcClientDriven.AddValue("Mem", (float)(decimal)pcMem.NextValue());
             spcClientDriven.AddValue("Threads", (float)(decimal)pcThreads.NextValue());
 
-            lblMemSeriesLastValue.Text = $"Test : {_testValue}      Test 2 : {_test2Value}";
+            //lblMemSeriesLastValue.Text = $"Test : {_testValue}      Test 2 : {_test2Value}";
         }
 
         private void btnMakeWOrk_Click(object sender, EventArgs e)
