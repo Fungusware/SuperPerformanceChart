@@ -1,11 +1,6 @@
 @echo off
 cls
 
-REM Tests !
-REM dotnet test "UnitTests\UnitTests.csproj"
-REM IF NOT "%ERRORLEVEL%"=="0" GOTO _FAILURE_
-REM THIS WAS TAKING FOR EVER TO FINISH -- find out why
-
 REM Variables
 set year=%date:~10,4%
 set day=%date:~4,2%
@@ -26,15 +21,15 @@ mkdir package
 
 REM Clean
 echo Clean
-dotnet clean "SuperPerformanceChart.sln"
+dotnet clean "FastColoredTextBox.sln"
 
 REM Build
 echo Pack Lib
-dotnet pack "SuperPerformanceChart.csproj" --interactive --output ".\package" /p:Version=%VER%
+dotnet pack "FastColoredTextBox.csproj" --interactive --output ".\package" /p:Version=%VER%
 
 REM Upload
 echo Upload
-dotnet nuget push --source "https://fungusware.pkgs.visualstudio.com/Fungusware/_packaging/Default/nuget/v3/index.json" --interactive --api-key az .\package\SuperPerformanceChart.*.nupkg
+dotnet nuget push --source "https://fungusware.pkgs.visualstudio.com/Fungusware/_packaging/Default/nuget/v3/index.json" --interactive --api-key az .\package\FastColoredTextBox.*.nupkg
 
 GOTO _EXIT_
 

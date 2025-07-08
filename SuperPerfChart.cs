@@ -11,8 +11,16 @@ namespace SuperPerformanceChart
 {
     public partial class SuperPerfChart : UserControl
     {
-        // Draw a background grid with a fixed line spacing
+        // Define the things that never change
         private const int GRID_SPACING = 16;
+        private const string NAME = "@name";
+        private const string CURRENT = "@current";
+        private const string MIN = "@min";
+        private const string VISIBLEMIN = "@vmin";
+        private const string MAX = "@max";
+        private const string VISIBLEMAX = "@vmax";
+        private const string MEAN = "@mean";
+        private const string VISIBLEMEAN = "@vmean";
 
         // Timer Mode
         private TimerMode _timerMode;
@@ -56,6 +64,7 @@ namespace SuperPerformanceChart
 
             AntiAliasing = true;
             UnifiedVerticalScale = true;
+            DoubleBuffered = true;
 
             // Redraw when resized
             SetStyle(ControlStyles.ResizeRedraw, true);
@@ -181,7 +190,9 @@ namespace SuperPerformanceChart
                 if (ProgressStyle.Visible)
                 {
                     if (ProgressStyle.DrawOnTop)
+                    {
                         DrawPercentageBar(g);
+                    }
                     DrawPercentageText(g);
                 }
             }
@@ -214,13 +225,8 @@ namespace SuperPerformanceChart
             // Connect all visible values with lines
             for (int i = 0; i < visibleValues; i++)
             {
-                var currentPoint = new Point();
-
-                currentPoint.X = _origin.X - (i * ValueSpacing);
-                currentPoint.Y = CalcVerticalPosition(series.ScaleMode, series.DrawValues[i]);
-
-                // Add the curve data points
-                points[i] = currentPoint;
+                points[i].X = _origin.X - (i * ValueSpacing);
+                points[i].Y = CalcVerticalPosition(series.ScaleMode, series.DrawValues[i]);
             }
 
             // Across to the X minimum -- less a margin so we dont see it
@@ -318,29 +324,20 @@ namespace SuperPerformanceChart
 
             if (string.IsNullOrEmpty(series.LegendMask)) return string.Empty;
 
-            const string name = "@name";
-            const string current = "@current";
-            const string min = "@min";
-            const string visibleMin = "@vmin";
-            const string max = "@max";
-            const string visibleMax = "@vmax";
-            const string mean = "@mean";
-            const string visibleMean = "@vmean";
-
             var legendFormatter = series.LegendFormatter;
 
             // only calculate what the legend text has requested to save processing
-            if (legendFormatter.HasParameter(name)) legendFormatter.Set(name, series.Name);
-            if (legendFormatter.HasParameter(current)) legendFormatter.Set(current, series.ValueFormatter(ValueDisplayTypeEnum.Current, series.Current()));
+            if (legendFormatter.HasParameter(NAME)) legendFormatter.Set(NAME, series.Name);
+            if (legendFormatter.HasParameter(CURRENT)) legendFormatter.Set(CURRENT, series.ValueFormatter(ValueDisplayTypeEnum.Current, series.Current()));
 
-            if (legendFormatter.HasParameter(min)) legendFormatter.Set(min, series.ValueFormatter(ValueDisplayTypeEnum.Min, series.Min()));
-            if (legendFormatter.HasParameter(visibleMin)) legendFormatter.Set(visibleMin, series.ValueFormatter(ValueDisplayTypeEnum.VisibleMin, series.VisibleMin(visibleValues)));
+            if (legendFormatter.HasParameter(MIN)) legendFormatter.Set(MIN, series.ValueFormatter(ValueDisplayTypeEnum.Min, series.Min()));
+            if (legendFormatter.HasParameter(VISIBLEMIN)) legendFormatter.Set(VISIBLEMIN, series.ValueFormatter(ValueDisplayTypeEnum.VisibleMin, series.VisibleMin(visibleValues)));
 
-            if (legendFormatter.HasParameter(max)) legendFormatter.Set(max, series.ValueFormatter(ValueDisplayTypeEnum.Max, series.Max()));
-            if (legendFormatter.HasParameter(visibleMax)) legendFormatter.Set(visibleMax, series.ValueFormatter(ValueDisplayTypeEnum.VisibleMax, series.VisibleMax(visibleValues)));
+            if (legendFormatter.HasParameter(MAX)) legendFormatter.Set(MAX, series.ValueFormatter(ValueDisplayTypeEnum.Max, series.Max()));
+            if (legendFormatter.HasParameter(VISIBLEMAX)) legendFormatter.Set(VISIBLEMAX, series.ValueFormatter(ValueDisplayTypeEnum.VisibleMax, series.VisibleMax(visibleValues)));
 
-            if (legendFormatter.HasParameter(mean)) legendFormatter.Set(mean, series.ValueFormatter(ValueDisplayTypeEnum.Mean, series.Mean()));
-            if (legendFormatter.HasParameter(visibleMean)) legendFormatter.Set(visibleMean, series.ValueFormatter(ValueDisplayTypeEnum.VisibleMean, series.VisibleMean(visibleValues)));
+            if (legendFormatter.HasParameter(MEAN)) legendFormatter.Set(MEAN, series.ValueFormatter(ValueDisplayTypeEnum.Mean, series.Mean()));
+            if (legendFormatter.HasParameter(VISIBLEMEAN)) legendFormatter.Set(VISIBLEMEAN, series.ValueFormatter(ValueDisplayTypeEnum.VisibleMean, series.VisibleMean(visibleValues)));
 
             return legendFormatter.ToString();
         }

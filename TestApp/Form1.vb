@@ -1,8 +1,10 @@
 ﻿Public Class frmMain
-    Private _testValue As Decimal
-    Private _adder As Integer = 1
-    Private _test2Value As Decimal
+    Private _testValue As Double
+    Private _test2Value As Double
     Private _adder2 As Integer
+
+    Private Const TwoPi As Double = 2 * Math.PI
+    Private Const CircleIncrement As Double = Math.PI / 100
 
     Private Sub frmMain_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         SetupChart(spcClientDriven)
@@ -62,15 +64,15 @@
     End Sub
 
     Private Sub tmrMain_Tick(sender As Object, e As EventArgs) Handles tmrMain.Tick
-        spcClientDriven.AddValue("Test", _testValue)
-        If (_testValue >= 20) Then
-            _adder = -1
-        ElseIf (_testValue <= 0) Then
-            _adder = 1
-        End If
-        _testValue += _adder
+        spcClientDriven.AddValue("Test", CSng(Math.Sin(_testValue)))
 
-        spcClientDriven.AddValue("Test2", _test2Value)
+        Dim increment As Double = CircleIncrement
+        If (_testValue >= TwoPi) Then
+            increment = -increment
+        End If
+        _testValue += increment
+
+        spcClientDriven.AddValue("Test2", CSng(_test2Value))
         If (_test2Value >= 30) Then
             _adder2 = -1
         ElseIf (_test2Value <= 0) Then
