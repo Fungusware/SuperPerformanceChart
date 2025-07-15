@@ -397,10 +397,12 @@ namespace SuperPerformanceChart
         /// <param name="g">Graphic</param>
         private void DrawBackgroundAndGrid(Graphics g)
         {
+            var clipRect = Rectangle.Ceiling(g.VisibleClipBounds);
+
             // Draw the background Gradient rectangle
-            using (var oBrush = BackgroundStyle.GetFillBrush(g.VisibleClipBounds))
+            using (var oBrush = BackgroundStyle.GetFillBrush(clipRect))
             {
-                g.FillRectangle(oBrush, g.VisibleClipBounds);
+                g.FillRectangle(oBrush, clipRect);
             }
 
             //if (_cachedGridTile == null)
@@ -408,7 +410,7 @@ namespace SuperPerformanceChart
             {
                 using (var brush = new TextureBrush(cachedGridTile))
                 {
-                    g.FillRectangle(brush, g.VisibleClipBounds);
+                    g.FillRectangle(brush, clipRect);
                 }
             }
 
