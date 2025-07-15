@@ -403,39 +403,12 @@ namespace SuperPerformanceChart
                 g.FillRectangle(oBrush, g.VisibleClipBounds);
             }
 
-            if (UseBitmapedGrid)
+            //if (_cachedGridTile == null)
+            using (var cachedGridTile = GenerateGridTile())
             {
-                //if (_cachedGridTile == null)
-                using (var cachedGridTile = GenerateGridTile())
+                using (var brush = new TextureBrush(cachedGridTile))
                 {
-                    using (var brush = new TextureBrush(cachedGridTile))
-                    {
-                        g.FillRectangle(brush, g.VisibleClipBounds);
-                    }
-                }
-            }
-            else
-            {
-                //Draw all visible, vertical gridlines(if wanted)
-                if (VerticalGridLine.Visible)
-                {
-                    int i = 0;
-                    while (i < Width)
-                    {
-                        g.DrawLine(VerticalGridLine.Pen, i, 0, i, Height);
-                        i += GRID_SPACING;
-                    }
-                }
-
-                // Draw all visible, horizontal gridlines (if wanted)
-                if (HorizontalGridLine.Visible)
-                {
-                    int i = Height;
-                    while (i > 0)
-                    {
-                        g.DrawLine(HorizontalGridLine.Pen, 0, i, Width, i);
-                        i -= GRID_SPACING;
-                    }
+                    g.FillRectangle(brush, g.VisibleClipBounds);
                 }
             }
 
