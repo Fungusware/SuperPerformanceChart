@@ -1,6 +1,8 @@
-﻿using System;
+﻿using SuperPerformanceChart;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace TestApp
 {
@@ -26,49 +28,55 @@ namespace TestApp
         {
             chrt.Series.Clear();
 
-            chrt.AddSeries("Test", "Test", Color.LightSeaGreen);
-            {
-                chrt.Series["Test"].Fill.Visible = true;
-                chrt.Series["Test"].CacheSize = 200;
-                chrt.Series["Test"].ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => $"{v:0.00}";
-                chrt.Series["Test"].ZOrder = 0;
-            }
+            var testSeries = chrt.AddSeries("Test", "Test", Color.LightSeaGreen);
+            testSeries.Fill.Visible = true;
+            testSeries.CacheSize = 200;
+            testSeries.ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => $"{v:0.00}";
+            testSeries.ZOrder = 0;
+            AddAsTabPage(testSeries);
 
-            chrt.AddSeries("Test2", "Test2", Color.DarkSeaGreen);
-            {
-                chrt.Series["Test2"].Fill.Visible = true;
-                chrt.Series["Test2"].CacheSize = 200;
-                chrt.Series["Test2"].ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => $"{v:0.00}";
-                chrt.Series["Test2"].ZOrder = 0;
-            }
+            var testSeries2 = chrt.AddSeries("Test2", "Test2", Color.DarkSeaGreen);
+            testSeries2.Fill.Visible = true;
+            testSeries2.CacheSize = 200;
+            testSeries2.ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => $"{v:0.00}";
+            testSeries2.ZOrder = 0;
+            AddAsTabPage(testSeries2);
 
-            chrt.AddSeries("CPU", "CPU", Color.SteelBlue);
-            {
-                chrt.Series["CPU"].LegendMask = "@name - Current : @current | Mean : @mean | Mean.V : @vmean";
-                chrt.Series["CPU"].ZOrder = 1;
-            }
+            var cpuSeries = chrt.AddSeries("CPU", "CPU", Color.SteelBlue);
+            cpuSeries.LegendMask = "@name - Current : @current | Mean : @mean | Mean.V : @vmean | Max : @max | Max.V : @vmax | Min : @min | Min.V : @vmin";
+            cpuSeries.ZOrder = 1;
+            AddAsTabPage(cpuSeries);
 
-            chrt.AddSeries("Mem", "Mem", Color.DarkGoldenrod);
-            {
-                chrt.Series["Mem"].CacheSize = 100;
-                chrt.Series["Mem"].LegendMask = "@name - Current : @current Mb | Mean : @mean Mb | Mean.V : @vmean  Mb";
-                chrt.Series["Mem"].ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => (v / 1024f / 1024f).ToString("0.0");
-                chrt.Series["Mem"].ZOrder = 2;
-            }
+            var memSeries = chrt.AddSeries("Mem", "Mem", Color.DarkGoldenrod);
+            memSeries.CacheSize = 100;
+            memSeries.LegendMask = "@name - Current : @current Mb | Mean : @mean Mb | Mean.V : @vmean  Mb";
+            memSeries.ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => (v / 1024f / 1024f).ToString("0.0");
+            memSeries.ZOrder = 2;
+            AddAsTabPage(memSeries);
 
-            chrt.AddSeries("Threads", "Threads", Color.ForestGreen);
-            {
-                chrt.Series["Threads"].CacheSize = 100;
-                chrt.Series["Threads"].ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => (v / 1024f / 1024f).ToString("0.0");
-                chrt.Series["Threads"].ZOrder = 3;
-            }
+            var threadSeries = chrt.AddSeries("Threads", "Threads", Color.ForestGreen);
+            threadSeries.CacheSize = 100;
+            threadSeries.ValueFormatter = (SuperPerformanceChart.Series.ValueDisplayTypeEnum t, float v) => (v / 1024f / 1024f).ToString("0.0");
+            threadSeries.ZOrder = 3;
+            AddAsTabPage(threadSeries);
 
             chrt.ExpandSeriesCacheToFillScreen = true;
-
             chrt.BackgroundStyle.StartColor = Color.White;
             chrt.BackgroundStyle.EndColor = Color.White;
-
             chrt.VerticalGridLine.Visible = true;
+        }
+
+        private void AddAsTabPage(Series theSeries)
+        {
+            // property grid for the series
+            var pg = new PropertyGrid();
+            pg.SelectedObject = theSeries;
+
+            // create a new tab page with the series name and add the property grid to it
+            var tabPage = new TabPage(theSeries.Name) { Tag = theSeries };
+            tabPage.Controls.Add(pg);
+            pg.Dock = DockStyle.Fill;
+            tabs.Controls.Add(tabPage);
         }
 
         private void tmrMain_Tick(object sender, EventArgs e)

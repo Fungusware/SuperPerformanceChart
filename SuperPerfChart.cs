@@ -591,15 +591,14 @@ namespace SuperPerformanceChart
         /// Adds a value to the Chart Line
         /// </summary>
         /// <param name="value">progress value</param>
-        public void AddValue(string series, float value)
+        public float AddValue(string seriesKey, float value)
         {
-            Series oSer = null;
-            if (Series.TryGetValue(series, out oSer))
+            if (Series.TryGetValue(seriesKey, out Series ser))
             {
                 switch (_timerMode)
                 {
                     case TimerMode.Disabled:
-                        ChartAppend(oSer, value);
+                        ChartAppend(ser, value);
                         Invalidate();
                         break;
 
@@ -607,22 +606,24 @@ namespace SuperPerformanceChart
                     case TimerMode.SynchronizedAverage:
                     case TimerMode.SynchronizedSum:
                         // For all Timer based modes, the Values are stored in the Queue
-                        oSer.QueuedValues.Enqueue(value);
+                        ser.QueuedValues.Enqueue(value);
                         break;
 
                     default:
                         throw new Exception(string.Format("Unsupported TimerMode: {0}", _timerMode));
                 }
             }
+
+            return value;
         }
 
-        public Series AddSeries(string sKey, string sName, Color baseColor)
+        public Series AddSeries(string seriesKey, string displayName, Color baseColor)
         {
             Series oSer = null;
-            if (!Series.ContainsKey(sKey))
+            if (!Series.ContainsKey(seriesKey))
             {
-                oSer = new Series(sKey, sName, baseColor);
-                Series.Add(sKey, oSer);
+                oSer = new Series(seriesKey, displayName, baseColor);
+                Series.Add(seriesKey, oSer);
             }
 
             return oSer;
@@ -632,27 +633,27 @@ namespace SuperPerformanceChart
         /// Appends value <paramref name="value"/> to the chart (without redrawing)
         /// </summary>
         /// <param name="value">performance value</param>
-        private void ChartAppend(Series oSer, float value)
+        private void ChartAppend(Series ser, float value)
         {
             // check values
-            if (oSer.ScaleMode == SuperPerformanceChart.Series.ScaleModeEnum.Percent && value > 100f)
+            if (ser.ScaleMode == SuperPerformanceChart.Series.ScaleModeEnum.Percent && value > 100f)
             {
                 value = 100;
             }
 
             // Insert at first position; Negative values are flatten to 0 (zero)
-            oSer.DrawValues.Insert(0, Math.Max(value, 0));
+            ser.DrawValues.Insert(0, Math.Max(value, 0));
 
             // Remove last item if maximum value count is reached
-            var cacheSize = GetVisibleValueCount(oSer);
+            var cacheSize = GetVisibleValueCount(ser);
             if (ExpandSeriesCacheToFillScreen)
-                cacheSize = Math.Max(cacheSize, oSer.CacheSize);
+                cacheSize = Math.Max(cacheSize, ser.CacheSize);
             else
-                cacheSize = Math.Min(cacheSize, oSer.CacheSize);
+                cacheSize = Math.Min(cacheSize, ser.CacheSize);
 
-            if (oSer.DrawValues.Count > cacheSize)
+            if (ser.DrawValues.Count > cacheSize)
             {
-                oSer.DrawValues.RemoveRange(cacheSize, oSer.DrawValues.Count - cacheSize);
+                ser.DrawValues.RemoveRange(cacheSize, ser.DrawValues.Count - cacheSize);
             }
 
             // Calculate horizontal grid offset for "scrolling" effect
