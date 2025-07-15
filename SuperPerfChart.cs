@@ -397,16 +397,10 @@ namespace SuperPerformanceChart
         /// <param name="g">Graphic</param>
         private void DrawBackgroundAndGrid(Graphics g)
         {
-            // Gets a reference to the current BufferedGraphicsContext
-            var currentContext = BufferedGraphicsManager.Current;
-            // Creates a BufferedGraphics instance. Drawing to the buffer, is 2x the speed of doing it directly
-            // as we do not need to enable Antialiasing on the background drawing surface.
-            var buffer = currentContext.Allocate(g, this.DisplayRectangle);
-
             // Draw the background Gradient rectangle
             using (var oBrush = BackgroundStyle.GetFillBrush(g.VisibleClipBounds))
             {
-                buffer.Graphics.FillRectangle(oBrush, g.VisibleClipBounds);
+                g.FillRectangle(oBrush, g.VisibleClipBounds);
             }
 
             if (UseBitmapedGrid)
@@ -416,7 +410,7 @@ namespace SuperPerformanceChart
                 {
                     using (var brush = new TextureBrush(cachedGridTile))
                     {
-                        buffer.Graphics.FillRectangle(brush, g.VisibleClipBounds);
+                        g.FillRectangle(brush, g.VisibleClipBounds);
                     }
                 }
             }
@@ -428,7 +422,7 @@ namespace SuperPerformanceChart
                     int i = 0;
                     while (i < Width)
                     {
-                        buffer.Graphics.DrawLine(VerticalGridLine.Pen, i, 0, i, Height);
+                        g.DrawLine(VerticalGridLine.Pen, i, 0, i, Height);
                         i += GRID_SPACING;
                     }
                 }
@@ -439,7 +433,7 @@ namespace SuperPerformanceChart
                     int i = Height;
                     while (i > 0)
                     {
-                        buffer.Graphics.DrawLine(HorizontalGridLine.Pen, 0, i, Width, i);
+                        g.DrawLine(HorizontalGridLine.Pen, 0, i, Width, i);
                         i -= GRID_SPACING;
                     }
                 }
@@ -447,9 +441,8 @@ namespace SuperPerformanceChart
 
             // Percentage
             if (!ProgressStyle.DrawOnTop)
-                DrawPercentageBar(buffer.Graphics);
+                DrawPercentageBar(g);
 
-            buffer.Render();
         }
 
         private Bitmap GenerateGridTile()
